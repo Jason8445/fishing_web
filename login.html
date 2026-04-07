@@ -64,6 +64,23 @@
       margin-bottom: 18px;
     }
 
+    .login-error {
+      display: none;
+      margin: 10px 0 18px;
+      padding: 18px 22px;
+      border-radius: 16px;
+      background: #f4d8d5;
+      color: #7a241d;
+      font-size: 22px;
+      font-weight: 600;
+      text-align: left;
+      line-height: 1.35;
+    }
+
+    .login-error.show {
+      display: block;
+    }
+
     .form-input {
       width: 100%;
       padding: 15px 16px;
@@ -244,6 +261,13 @@
         height: 36px;
       }
 
+      .login-error {
+        margin: 8px 0 14px;
+        padding: 14px 16px;
+        font-size: 16px;
+        border-radius: 12px;
+      }
+
       .footer {
         flex-direction: column;
         align-items: flex-start;
@@ -261,6 +285,8 @@
           逢甲大學 / <span class="university-name-en">Feng Chia University</span>
         </div>
       </div>
+
+      <div class="login-error" id="loginError" role="alert" aria-live="polite"></div>
 
       <form id="loginForm">
         <div class="form-group">
@@ -302,15 +328,13 @@
   <script>
     // Login form handling
     const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
     loginForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      
-      if (username && password) {
-        alert('登入中...\n帳號: ' + username);
-        // Here you would typically send a request to your server
-      }
+
+      const isEnglish = langCurrentText.textContent === 'English (en)';
+      loginError.textContent = isEnglish ? 'Invalid login, please try again' : '登入無效，請重試';
+      loginError.classList.add('show');
     });
 
     // Language selector
@@ -320,13 +344,27 @@
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const loginButton = document.querySelector('.login-btn');
+    let currentLanguage = 'zh_tw';
+
+    function updateLoginErrorMessage() {
+      if (!loginError.classList.contains('show')) {
+        return;
+      }
+
+      loginError.textContent = currentLanguage === 'en'
+        ? 'Invalid login, please try again'
+        : '登入無效，請重試';
+    }
 
     function applyLanguage(lang) {
+      currentLanguage = lang;
+
       if (lang === 'en') {
         usernameInput.placeholder = 'Username';
         passwordInput.placeholder = 'Password';
         loginButton.textContent = 'Log in';
         langCurrentText.textContent = 'English (en)';
+        updateLoginErrorMessage();
         return;
       }
 
@@ -334,6 +372,7 @@
       passwordInput.placeholder = '密碼';
       loginButton.textContent = '登入';
       langCurrentText.textContent = '正體中文 (zh_tw)';
+      updateLoginErrorMessage();
     }
 
     langSelector.addEventListener('click', function(e) {
