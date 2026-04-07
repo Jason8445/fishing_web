@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iLearn 逢甲大學</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      min-height: 100vh;
+      background-color: #a83232;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 20px;
+    }
+
+    .login-container {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 900px;
+      padding: 34px 46px 28px;
+    }
+
+    .logo-section {
+      text-align: left;
+      margin-bottom: 18px;
+    }
+
+    .logo-image {
+      display: block;
+      width: min(100%, 760px);
+      height: auto;
+    }
+
+    .university-name {
+      display: none;
+    }
+
+    .university-name-en {
+      color: #d4a574;
+      font-size: 18px;
+      letter-spacing: 3px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 15px 16px;
+      border: 2px solid #a8b1bd;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #a83232;
+      box-shadow: 0 0 0 3px rgba(168, 50, 50, 0.12);
+    }
+
+    .form-input::placeholder {
+      color: #999;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      background-color: #b00015;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 0;
+    }
+
+    .login-btn:hover {
+      background-color: #8f0012;
+    }
+
+    .login-btn:active {
+      background-color: #6f0010;
+    }
+
+    .info-text {
+      text-align: center;
+      margin-top: 0;
+      font-size: 16px;
+      color: #232323;
+      font-weight: 600;
+    }
+
+    .nid-link-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+      font-size: 16px;
+      color: #232323;
+      font-weight: 600;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nid-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nid-logo-image {
+      display: block;
+      height: 44px;
+      width: auto;
+    }
+
+    .nid-arrow { color: #c0392b; font-size: 14px; }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 16px;
+    }
+
+    .language-selector {
+      display: flex;
+      align-items: center;
+      color: #a83232;
+      font-size: 15px;
+      cursor: pointer;
+      position: relative;
+      gap: 8px;
+    }
+
+    .language-selector:hover {
+      text-decoration: underline;
+    }
+
+    .language-selector::after {
+      content: '▼';
+      font-size: 10px;
+      margin-left: 5px;
+    }
+
+    .cookie-link {
+      display: flex;
+      align-items: center;
+      color: #a83232;
+      font-size: 15px;
+      text-decoration: none;
+      gap: 4px;
+    }
+
+    .cookie-link:hover {
+      text-decoration: underline;
+    }
+
+    .cookie-icon {
+      margin-right: 0;
+      font-size: 16px;
+    }
+
+    /* Language dropdown */
+    .language-dropdown {
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: none;
+      min-width: 150px;
+      margin-bottom: 5px;
+    }
+
+    .language-dropdown.show {
+      display: block;
+    }
+
+    .language-option {
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .language-option:hover {
+      background-color: #f5f5f5;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 12px;
+      }
+
+      .login-container {
+        border-radius: 10px;
+        padding: 24px 16px 20px;
+      }
+
+      .logo-image {
+        width: 100%;
+      }
+
+      .info-text,
+      .nid-link-section {
+        font-size: 14px;
+      }
+
+      .nid-logo-image {
+        height: 36px;
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo-section">
+      <img src="moodle4_log.jpg" alt="iLearn 逢甲大學 Feng Chia University" class="logo-image">
+      <div class="university-name">
+        逢甲大學 / <span class="university-name-en">Feng Chia University</span>
+      </div>
+      </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <input type="text" class="form-input" id="username" placeholder="帳號" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-input" id="password" placeholder="密碼" required>
+      </div>
+      <button type="submit" class="login-btn">登入</button>
+    </form>
+
+    <p class="info-text">請使用NID帳號/密碼登入平台。</p>
+
+    <div class="nid-link-section">
+      <span>欲變更NID密碼，請連結至</span>
+      <a href="#" class="nid-logo" aria-label="NID">
+        <img src="nidlogo.png" alt="NID" class="nid-logo-image">
+      </a>
+    </div>
+
+    <div class="footer">
+      <div class="language-selector" id="langSelector">
+        正體中文 (zh_tw)
+        <div class="language-dropdown" id="langDropdown">
+          <div class="language-option" data-lang="zh_tw">正體中文 (zh_tw)</div>
+          <div class="language-option" data-lang="en">English (en)</div>
+          <div class="language-option" data-lang="zh_cn">简体中文 (zh_cn)</div>
+        </div>
+      </div>
+      <a href="#" class="cookie-link">
+        <span class="cookie-icon">❓</span>
+        Cookie使用資訊
+      </a>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    // Login form handling
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if (username && password) {
+        alert('登入中...\n帳號: ' + username);
+        // Here you would typically send a request to your server
+      }
+    });
+
+    // Language selector
+    const langSelector = document.getElementById('langSelector');
+    const langDropdown = document.getElementById('langDropdown');
+
+    langSelector.addEventListener('click', function(e) {
+      e.stopPropagation();
+      langDropdown.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function() {
+      langDropdown.classList.remove('show');
+    });
+
+    // Handle language selection
+    const langOptions = document.querySelectorAll('.language-option');
+    langOptions.forEach(option => {
+      option.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const lang = this.dataset.lang;
+        const langText = this.textContent;
+        
+        // Update the selector text (remove the arrow indicator)
+        langSelector.childNodes[0].textContent = langText + ' ';
+        langDropdown.classList.remove('show');
+      });
+    });
+
+    // Input focus effects
+    const inputs = document.querySelectorAll('.form-input');
+    inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+      });
+      input.addEventListener('blur', function() {
+        this.parentElement.classList.remove('focused');
+      });
+    });
+  </script>
+</body>
+</html>
