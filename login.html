@@ -30,6 +30,15 @@
       padding: 34px 46px 28px;
     }
 
+    .login-top {
+      padding-bottom: 22px;
+      border-bottom: 1px solid #e5e8ee;
+    }
+
+    .login-bottom {
+      padding-top: 22px;
+    }
+
     .logo-section {
       text-align: left;
       margin-bottom: 18px;
@@ -107,6 +116,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
       margin-top: 18px;
       font-size: 16px;
       color: #232323;
@@ -213,6 +223,14 @@
         padding: 24px 16px 20px;
       }
 
+      .login-top {
+        padding-bottom: 18px;
+      }
+
+      .login-bottom {
+        padding-top: 18px;
+      }
+
       .logo-image {
         width: 100%;
       }
@@ -236,46 +254,48 @@
 </head>
 <body>
   <div class="login-container">
-    <div class="logo-section">
-      <img src="moodle4_log.jpg" alt="iLearn 逢甲大學 Feng Chia University" class="logo-image">
-      <div class="university-name">
-        逢甲大學 / <span class="university-name-en">Feng Chia University</span>
-      </div>
-      </div>
-
-    <form id="loginForm">
-      <div class="form-group">
-        <input type="text" class="form-input" id="username" placeholder="帳號" required>
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-input" id="password" placeholder="密碼" required>
-      </div>
-      <button type="submit" class="login-btn">登入</button>
-    </form>
-
-    <p class="info-text">請使用NID帳號/密碼登入平台。</p>
-
-    <div class="nid-link-section">
-      <span>欲變更NID密碼，請連結至</span>
-      <a href="#" class="nid-logo" aria-label="NID">
-        <img src="nidlogo.png" alt="NID" class="nid-logo-image">
-      </a>
-    </div>
-
-    <div class="footer">
-      <div class="language-selector" id="langSelector">
-        正體中文 (zh_tw)
-        <div class="language-dropdown" id="langDropdown">
-          <div class="language-option" data-lang="zh_tw">正體中文 (zh_tw)</div>
-          <div class="language-option" data-lang="en">English (en)</div>
-          <div class="language-option" data-lang="zh_cn">简体中文 (zh_cn)</div>
+    <div class="login-top">
+      <div class="logo-section">
+        <img src="moodle4_log.jpg" alt="iLearn 逢甲大學 Feng Chia University" class="logo-image">
+        <div class="university-name">
+          逢甲大學 / <span class="university-name-en">Feng Chia University</span>
         </div>
       </div>
-      <a href="#" class="cookie-link">
-        <span class="cookie-icon">❓</span>
-        Cookie使用資訊
-      </a>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <input type="text" class="form-input" id="username" placeholder="帳號" required>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-input" id="password" placeholder="密碼" required>
+        </div>
+        <button type="submit" class="login-btn">登入</button>
+      </form>
     </div>
+
+    <div class="login-bottom">
+      <p class="info-text">請使用NID帳號/密碼登入平台。</p>
+
+      <div class="nid-link-section">
+        <span>欲變更NID密碼，請連結至</span>
+        <a href="#" class="nid-logo" aria-label="NID">
+          <img src="nidlogo.png" alt="NID" class="nid-logo-image">
+        </a>
+      </div>
+
+      <div class="footer">
+        <div class="language-selector" id="langSelector">
+          <span id="langCurrentText">正體中文 (zh_tw)</span>
+          <div class="language-dropdown" id="langDropdown">
+            <div class="language-option" data-lang="zh_tw">正體中文 (zh_tw)</div>
+            <div class="language-option" data-lang="en">English (en)</div>
+          </div>
+        </div>
+        <a href="#" class="cookie-link">
+          <span class="cookie-icon">❓</span>
+          Cookie使用資訊
+        </a>
+      </div>
     </div>
   </div>
 
@@ -296,6 +316,25 @@
     // Language selector
     const langSelector = document.getElementById('langSelector');
     const langDropdown = document.getElementById('langDropdown');
+    const langCurrentText = document.getElementById('langCurrentText');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const loginButton = document.querySelector('.login-btn');
+
+    function applyLanguage(lang) {
+      if (lang === 'en') {
+        usernameInput.placeholder = 'Username';
+        passwordInput.placeholder = 'Password';
+        loginButton.textContent = 'Log in';
+        langCurrentText.textContent = 'English (en)';
+        return;
+      }
+
+      usernameInput.placeholder = '帳號';
+      passwordInput.placeholder = '密碼';
+      loginButton.textContent = '登入';
+      langCurrentText.textContent = '正體中文 (zh_tw)';
+    }
 
     langSelector.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -313,13 +352,12 @@
       option.addEventListener('click', function(e) {
         e.stopPropagation();
         const lang = this.dataset.lang;
-        const langText = this.textContent;
-        
-        // Update the selector text (remove the arrow indicator)
-        langSelector.childNodes[0].textContent = langText + ' ';
+        applyLanguage(lang);
         langDropdown.classList.remove('show');
       });
     });
+
+    applyLanguage('zh_tw');
 
     // Input focus effects
     const inputs = document.querySelectorAll('.form-input');
